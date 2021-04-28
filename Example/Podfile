@@ -4,6 +4,9 @@ platform :ios, '12.0'
 
 target 'RxSwiftDitto_Example' do
   pod 'RxSwiftDitto', :path => '../'
+  pod 'RxCocoa', '~> 6.1.0'
+  pod 'RxDataSources', '~> 5.0.0'
+  pod 'Fakery', '=5.1.0'
 
   target 'RxSwiftDitto_Tests' do
     inherit! :search_paths

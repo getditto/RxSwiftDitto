@@ -12,14 +12,11 @@ class Tests: XCTestCase {
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        let path = Bundle.main.path(forResource: "license_token", ofType: "txt") // file path for file "data.txt"
-        guard let text = try? String(contentsOfFile: path!) else {
-            fatalError("please add a file called license_token.txt to the bundle and paste a valid Ditto license token")
-        }
+
         let randomTemporaryDirectory = URL(fileURLWithPath: NSTemporaryDirectory(),
                                         isDirectory: true).appendingPathComponent(UUID().uuidString)
         ditto = Ditto(persistenceDirectory: randomTemporaryDirectory)
-        ditto.setAccessLicense(text)
+        ditto.setAccessLicense(Helper.licenseToken)
         ditto.startSync()
     }
     
@@ -40,7 +37,9 @@ class Tests: XCTestCase {
                     "color": ["red", "blue", "yellow"].randomElement()!
                 ]
             }
-            .subscribe(collection.rx.insert)
+            .subscribe(onNext: { paylod in
+                try! collection.insert(paylod)
+            })
             .disposed(by: disposeBag)
 
         collection

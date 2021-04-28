@@ -1,22 +1,38 @@
 PODS:
+  - Differentiator (5.0.0)
   - DittoObjC (1.0.0)
   - DittoSwift (1.0.0):
     - DittoObjC (= 1.0.0)
   - Fakery (5.1.0)
+  - RxCocoa (6.1.0):
+    - RxRelay (= 6.1.0)
+    - RxSwift (= 6.1.0)
+  - RxDataSources (5.0.0):
+    - Differentiator (~> 5.0)
+    - RxCocoa (~> 6.0)
+    - RxSwift (~> 6.0)
+  - RxRelay (6.1.0):
+    - RxSwift (= 6.1.0)
   - RxSwift (6.1.0)
   - RxSwiftDitto (0.1.0):
     - DittoSwift (>= 1.0.0)
     - RxSwift (>= 6.0.0)
 
 DEPENDENCIES:
-  - Fakery
+  - Fakery (= 5.1.0)
+  - RxCocoa (~> 6.1.0)
+  - RxDataSources (~> 5.0.0)
   - RxSwiftDitto (from `../`)
 
 SPEC REPOS:
   trunk:
+    - Differentiator
     - DittoObjC
     - DittoSwift
     - Fakery
+    - RxCocoa
+    - RxDataSources
+    - RxRelay
     - RxSwift
 
 EXTERNAL SOURCES:
@@ -24,12 +40,16 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
+  Differentiator: e8497ceab83c1b10ca233716d547b9af21b9344d
   DittoObjC: acbf18ad0d474b127b99ae881755ae6f55529266
   DittoSwift: a477186989c3372b12e97badfb06b2f131b40de3
   Fakery: a90caff00ca5cacde6c161c3eafc72314a03d34d
+  RxCocoa: 5c51f02d562cbd94629f6c26cf0c80fe4ab8d343
+  RxDataSources: aa47cc1ed6c500fa0dfecac5c979b723542d79cf
+  RxRelay: 483e1a19fad961b41f0b0c0bee506f46c1ae14fe
   RxSwift: a834e5c538e89eca0cae86f403f4fbf0336786ce
-  RxSwiftDitto: 1cfc863169534d38689fb2c6dd8a4a3af9b5fea1
+  RxSwiftDitto: 8e4890ad04639a3e5bf751c5a1e450f6ab53e865
 
-PODFILE CHECKSUM: 8d6ca2b6913d23af98b5402ee5803e4ef9eee7e9
+PODFILE CHECKSUM: a94a92b63c4051ebf107d165c32c3edd092e5315
 
 COCOAPODS: 1.10.1
