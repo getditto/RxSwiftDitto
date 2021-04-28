@@ -1,0 +1,35 @@
+PODS:
+  - DittoObjC (1.0.0)
+  - DittoSwift (1.0.0):
+    - DittoObjC (= 1.0.0)
+  - Fakery (5.1.0)
+  - RxSwift (6.1.0)
+  - RxSwiftDitto (0.1.0):
+    - DittoSwift (>= 1.0.0)
+    - RxSwift (>= 6.0.0)
+
+DEPENDENCIES:
+  - Fakery
+  - RxSwiftDitto (from `../`)
+
+SPEC REPOS:
+  trunk:
+    - DittoObjC
+    - DittoSwift
+    - Fakery
+    - RxSwift
+
+EXTERNAL SOURCES:
+  RxSwiftDitto:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  DittoObjC: acbf18ad0d474b127b99ae881755ae6f55529266
+  DittoSwift: a477186989c3372b12e97badfb06b2f131b40de3
+  Fakery: a90caff00ca5cacde6c161c3eafc72314a03d34d
+  RxSwift: a834e5c538e89eca0cae86f403f4fbf0336786ce
+  RxSwiftDitto: 1cfc863169534d38689fb2c6dd8a4a3af9b5fea1
+
+PODFILE CHECKSUM: 8d6ca2b6913d23af98b5402ee5803e4ef9eee7e9
+
+COCOAPODS: 1.10.1

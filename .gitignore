@@ -1,6 +1,9 @@
 # OS X
 .DS_Store
 
+# Ditto License Token
+Example/license_token.txt
+
 # Xcode
 build/
 *.pbxuser
@@ -34,4 +37,4 @@ Carthage/Build
 # Note: if you ignore the Pods directory, make sure to uncomment
 # `pod install` in .travis.yml
 #
-# Pods/
+Pods/

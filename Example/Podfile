@@ -1,13 +1,13 @@
 use_frameworks!
 
-platform :ios, '9.0'
+platform :ios, '12.0'
 
 target 'RxSwiftDitto_Example' do
   pod 'RxSwiftDitto', :path => '../'
 
   target 'RxSwiftDitto_Tests' do
     inherit! :search_paths
-
+    pod 'Fakery', '=5.1.0'
     
   end
 end
