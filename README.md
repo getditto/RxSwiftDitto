@@ -54,9 +54,28 @@ ditto
   })
   .disposed(by: disposeBag)
 ```
+
+Observing peers
+
+```swift
+var disposeBag = DisposeBag()
+
+ditto
+  .rx
+  .remotePeers
+  .subscribe(onNext: { (remotePeers) in
+    // remotePeers is `[Dit]`
+  })
+  .disposed(by: disposeBag)
+```
+
+## Upcoming features
+
+* `.rx` extension on `insert`, `update`, `remove` and `evict`
+
 ## Author
 
-2183729, max@ditto.live
+mbalex99, max@ditto.live
 
 ## License
 
