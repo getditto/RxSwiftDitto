@@ -69,7 +69,7 @@ ditto
   .disposed(by: disposeBag)
 ```
 
-## Upcoming features
+## Upcoming releases will include
 
 * `.rx` extension on `insert`, `update`, `remove` and `evict`
 
