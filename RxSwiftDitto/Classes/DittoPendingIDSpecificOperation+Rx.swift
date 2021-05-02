@@ -25,7 +25,7 @@ extension Reactive where Base: DittoPendingIDSpecificOperation {
         }
     }
 
-    public var liveQueryDocumentsWithEvent: Observable<DittoDocumentWithLiveQueryEvent> {
+    public var liveQueryDocumentWithEvent: Observable<DittoDocumentWithLiveQueryEvent> {
         return Observable.create { observer in
             let l = self.base.observe { doc, event in
                 observer.onNext((doc, event))
