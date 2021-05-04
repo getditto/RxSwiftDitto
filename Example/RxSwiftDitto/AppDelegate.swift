@@ -7,21 +7,29 @@
 //
 
 import UIKit
+import DittoSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    static var ditto: Ditto!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.rootViewController = {
             let navigationController = UINavigationController(rootViewController: RootViewController())
+            navigationController.navigationBar.prefersLargeTitles = true
             return navigationController
         }()
         window.makeKeyAndVisible()
+
+        // ditto setup
+        Self.ditto = Ditto()
+        Self.ditto.setAccessLicense(Helper.licenseToken)
+        Self.ditto.startSync()
+
         self.window = window
         return true
     }

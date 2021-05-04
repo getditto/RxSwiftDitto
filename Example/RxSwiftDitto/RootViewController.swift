@@ -21,7 +21,11 @@ class RootViewController: UITableViewController {
         NavOption(
             title: "RxDataSources and RxSwiftDitto with DittoDocuments",
             subtitle: "This shows off how you can use RxSwiftDitto to bind to RxDataSources to show live document changes",
-            viewController: RxDataSourcesDocumentsViewController())
+            viewController: RxDataSourcesDocumentsViewController()),
+        NavOption(
+            title: "RxDataSources and RxSwiftDitto with combineLatest",
+            subtitle: "An example of simulating \"joins\" with multiple collections of companies and products",
+            viewController: RxDataSourcesCombineLatestViewController())
     ]
 
     override func viewDidLoad() {

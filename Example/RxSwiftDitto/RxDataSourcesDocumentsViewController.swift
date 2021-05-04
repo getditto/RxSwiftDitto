@@ -14,7 +14,14 @@ import RxDataSources
 import Fakery
 
 
-struct SectionOfCompanies: AnimatableSectionModelType {
+extension Company: IdentifiableType {
+    typealias Identity = String
+    var identity: String {
+        return self.id
+    }
+}
+
+struct SectionOfCompanies: AnimatableSectionModelType, IdentifiableType {
 
     var items: [Company]
 
@@ -37,43 +44,11 @@ struct SectionOfCompanies: AnimatableSectionModelType {
 
 }
 
-struct Company {
-
-    var id: String
-    var title: String
-    var details: String
-    var editedOn: Date
-
-    init(document: DittoDocument) {
-        id = document.id.toString()
-        title = document["title"].stringValue
-        details = document["details"].stringValue
-        editedOn = {
-            guard let value = document["editedOn"].string else {
-                return Date()
-            }
-            let dateFormatter = ISO8601DateFormatter()
-            return dateFormatter.date(from: value) ?? Date()
-        }()
-    }
-}
-
-/**
- Required protocols for RxDataSources
- */
-extension Company: IdentifiableType, Equatable {
-    typealias Identity = String
-    var identity: String {
-        return self.id
-    }
-}
-
 class RxDataSourcesDocumentsViewController: UIViewController {
 
     var disposeBag = DisposeBag()
 
     let tableView = UITableView()
-    var ditto = Ditto()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,8 +62,8 @@ class RxDataSourcesDocumentsViewController: UIViewController {
         addBarButtonItem
             .rx
             .tap
-            .bind { [unowned self] _ in
-                try! self.ditto.store["companies"].insert([
+            .bind { _ in
+                try! AppDelegate.ditto.store["companies"].insert([
                     "title": Faker().company.name(),
                     "details": Faker().company.bs(),
                     "editedOn": ISO8601DateFormatter().string(from: Date())
@@ -99,8 +74,8 @@ class RxDataSourcesDocumentsViewController: UIViewController {
         clearBarButtonItem
             .rx
             .tap
-            .bind { [unowned self] _ in
-                self.ditto.store["companies"].findAll().remove()
+            .bind { _ in
+                AppDelegate.ditto.store["companies"].findAll().remove()
             }
             .disposed(by: disposeBag)
 
@@ -122,10 +97,7 @@ class RxDataSourcesDocumentsViewController: UIViewController {
             return true
         }
 
-        ditto.setAccessLicense(Helper.licenseToken)
-        ditto.startSync()
-
-        let companies: Observable<[SectionOfCompanies]> = ditto.store["companies"]
+        let companies: Observable<[SectionOfCompanies]> = AppDelegate.ditto.store["companies"]
             .findAll()
             .sort("editedOn", direction: .descending)
             .rx
@@ -144,13 +116,9 @@ class RxDataSourcesDocumentsViewController: UIViewController {
             .modelDeleted(Company.self)
             .bind { companyToDelete in
                 let companyId = companyToDelete.id
-                self.ditto.store["companies"].findByID(DittoDocumentID(value: companyId)).remove()
+                AppDelegate.ditto.store["companies"].findByID(DittoDocumentID(value: companyId)).remove()
             }
             .disposed(by: disposeBag)
-    }
-
-    deinit {
-        ditto.stopSync()
     }
 
     override func viewWillLayoutSubviews() {
