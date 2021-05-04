@@ -36,6 +36,17 @@ ditto
     // docs is `[DittoDocument]`
   })
   .disposed(by: disposeBag)
+  
+// or if you've also installed RxCocoa
+ditto
+  .store["cars"]
+  .find("color == 'red'")
+  .rx
+  .liveQuery
+  .bind{ docs in
+    // docs is `[DittoDocument]`
+  }
+  .disposed(by: disposeBag)
 ```
 
 Simple live queries with snapshots of `[DittoDocument]`
@@ -68,6 +79,10 @@ ditto
   })
   .disposed(by: disposeBag)
 ```
+
+# Example App
+
+This repo also includes an example that shows you a simple usage of using `RxSwiftDitto` with [RxDataSource](https://github.com/RxSwiftCommunity/RxDataSources) which is a fantastic addition to `UITableView` and `UICollectionView`.
 
 ## Upcoming releases will include
 
