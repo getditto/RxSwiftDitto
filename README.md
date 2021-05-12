@@ -73,7 +73,7 @@ var disposeBag = DisposeBag()
 
 ditto
   .rx
-  .remotePeers
+  .peers
   .subscribe(onNext: { (remotePeers) in
     // remotePeers is `[Dit]`
   })
