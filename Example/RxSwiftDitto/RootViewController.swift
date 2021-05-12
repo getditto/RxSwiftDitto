@@ -25,7 +25,11 @@ class RootViewController: UITableViewController {
         NavOption(
             title: "RxDataSources and RxSwiftDitto with combineLatest",
             subtitle: "An example of simulating \"joins\" with multiple collections of companies and products",
-            viewController: RxDataSourcesCombineLatestViewController())
+            viewController: RxDataSourcesCombineLatestViewController()),
+        NavOption(
+            title: "RxDataSources and Remote Peers",
+            subtitle: "An example showing nearby peers using the observe API in a Table",
+            viewController: RxDataSourcesRemotePeersViewController  ())
     ]
 
     override func viewDidLoad() {

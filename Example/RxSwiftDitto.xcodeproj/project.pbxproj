@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		224B7C0A751B171192C6C0F7 /* Pods_RxSwiftDitto_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62F0F9FABA7577AA6D63D54E /* Pods_RxSwiftDitto_Example.framework */; };
+		2D0B9C16264C0DA000D61BC6 /* RxDataSourcesRemotePeersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D0B9C15264C0DA000D61BC6 /* RxDataSourcesRemotePeersViewController.swift */; };
 		2D3B1DCD263F3D900097BF81 /* RxDataSourcesCombineLatestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3B1DCC263F3D900097BF81 /* RxDataSourcesCombineLatestViewController.swift */; };
 		2D3B1DD0263F3DB50097BF81 /* Company.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3B1DCF263F3DB50097BF81 /* Company.swift */; };
 		2D3B1DD2263F3E540097BF81 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3B1DD1263F3E540097BF81 /* Product.swift */; };
@@ -35,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2D0B9C15264C0DA000D61BC6 /* RxDataSourcesRemotePeersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxDataSourcesRemotePeersViewController.swift; sourceTree = "<group>"; };
 		2D3B1DCC263F3D900097BF81 /* RxDataSourcesCombineLatestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxDataSourcesCombineLatestViewController.swift; sourceTree = "<group>"; };
 		2D3B1DCF263F3DB50097BF81 /* Company.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Company.swift; sourceTree = "<group>"; };
 		2D3B1DD1263F3E540097BF81 /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 				607FACD31AFB9204008FA782 /* Supporting Files */,
 				2DF1D86C263A10AF00BA1D38 /* RxDataSourcesDocumentsViewController.swift */,
 				2D3B1DCC263F3D900097BF81 /* RxDataSourcesCombineLatestViewController.swift */,
+				2D0B9C15264C0DA000D61BC6 /* RxDataSourcesRemotePeersViewController.swift */,
 			);
 			name = "Example for RxSwiftDitto";
 			path = RxSwiftDitto;
@@ -393,6 +396,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2D3B1DCD263F3D900097BF81 /* RxDataSourcesCombineLatestViewController.swift in Sources */,
+				2D0B9C16264C0DA000D61BC6 /* RxDataSourcesRemotePeersViewController.swift in Sources */,
 				607FACD81AFB9204008FA782 /* RootViewController.swift in Sources */,
 				2DF1D86D263A10AF00BA1D38 /* RxDataSourcesDocumentsViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,

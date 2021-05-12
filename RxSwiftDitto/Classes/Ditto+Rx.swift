@@ -15,13 +15,13 @@ extension Reactive where Base: Ditto {
     /**
      An observable of `DittoRemotePeer`
      */
-    var peers: Observable<[DittoRemotePeer]> {
-        return Observable.create({ [weak base = self.base] observer in
-            let h = base?.observePeers { peers in
+    public var peers: Observable<[DittoRemotePeer]> {
+        return Observable.create({  observer in
+            let h = base.observePeers { peers in
                 observer.onNext(peers)
             }
             return Disposables.create {
-                h?.stop()
+                h.stop()
             }
         })
     }

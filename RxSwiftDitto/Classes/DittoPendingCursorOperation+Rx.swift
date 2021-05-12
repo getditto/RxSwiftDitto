@@ -27,7 +27,7 @@ extension Reactive where Base: DittoPendingCursorOperation {
      Returns an observable of ([DittoDocument], DittoLiveQueryEvent?)
      This is useful for discerning what has happened since the last sync value.
      */
-    var liveQueryDocumentsWithEvent: Observable<DittoDocumentsWithLiveQueryEvent> {
+    public var liveQueryDocumentsWithEvent: Observable<DittoDocumentsWithLiveQueryEvent> {
         return Observable.create { observer in
             let liveQuery = base.observe(eventHandler: { docs, event in
                 observer.onNext((docs, event))
