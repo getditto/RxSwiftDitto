@@ -131,14 +131,14 @@ class RxDataSourcesCombineLatestViewController: UIViewController {
             .sort("editedOn", direction: .descending)
             .rx
             .liveQuery
-            .map({ docs in docs.map{ doc in Company(document: doc) } })
+            .map({ (docs, _) in docs.map{ doc in Company(document: doc) } })
 
         let products$: Observable<[Product]> = AppDelegate.ditto.store["products"]
             .findAll()
             .sort("editedOn", direction: .descending)
             .rx
             .liveQuery
-            .map({ docs in docs.map{ doc in Product(document: doc) } })
+            .map({ (docs, _) in docs.map{ doc in Product(document: doc) } })
 
         // notice this combine latest
         // this is where the two live query results are "joined" together

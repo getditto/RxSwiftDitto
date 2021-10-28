@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'RxSwiftDitto'
-  s.version          = '0.1.1'
+  s.version          = '1.0.0'
   s.summary = "RxSwift extension methods around the DittoSwift library."
   s.homepage         = 'https://github.com/getditto/RxSwiftDitto'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
@@ -32,5 +32,5 @@ Pod::Spec.new do |s|
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
   s.dependency 'RxSwift', '>= 6.0.0'
-  s.dependency 'DittoSwift', '>= 1.0.0'
+  s.dependency 'DittoSwift', '>= 1.0.14'
 end

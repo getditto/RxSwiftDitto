@@ -16,7 +16,7 @@ extension Reactive where Base: Ditto {
      An observable of `DittoRemotePeer`
      */
     public var peers: Observable<[DittoRemotePeer]> {
-        return Observable.create({  observer in
+        return Observable.create({ observer in
             let h = base.observePeers { peers in
                 observer.onNext(peers)
             }
