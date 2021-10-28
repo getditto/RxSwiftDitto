@@ -18,7 +18,7 @@ pod 'RxSwiftDitto'
 
 ### For testing...
 
-DittoSwift requires a license token in order to work properly. Please contact the Ditto team on at [contact@ditto.live](mailto:contact@ditto.live) to get access to a license token. This project loads a license token from a file `license_token.txt`. Once you've obtained a license token, you can create the file and paste it in. Once you open up `RxSwiftDitto.xcworkspace` you will see that the `license_token.txt` is part of the test target. Note: `license_token.txt` is part of the `.gitignore`. Ensure not to accidentally commit and push it up to this repo. 
+DittoSwift requires a license token in order to work properly. Please contact the Ditto team on at [contact@ditto.live](mailto:contact@ditto.live) to get access to a license token. This project loads a license token from a file `license_token.txt`. Once you've obtained a license token, you can create the file and paste it in. Once you open up `RxSwiftDitto.xcworkspace` you will see that the `license_token.txt` is part of the test target. Note: `license_token.txt` is part of the `.gitignore`. Ensure not to accidentally commit and push it up to this repo.
 
 ## Usage:
 
@@ -32,18 +32,18 @@ ditto
   .find("color == 'red'")
   .rx
   .liveQuery
-  .subscribe(onNext: { docs in
+  .subscribe(onNext: { docs, _ in
     // docs is `[DittoDocument]`
   })
   .disposed(by: disposeBag)
-  
+
 // or if you've also installed RxCocoa
 ditto
   .store["cars"]
   .find("color == 'red'")
   .rx
   .liveQuery
-  .bind{ docs in
+  .bind{ docs, _ in
     // docs is `[DittoDocument]`
   }
   .disposed(by: disposeBag)
@@ -58,7 +58,7 @@ ditto
   .store["cars"]
   .find("color == 'red'")
   .rx
-  .liveQueryDocumentsWithEvent
+  .liveQuery
   .subscribe(onNext: { (docs, event) in
     // docs is `[DittoDocument]`
     // event is [DittoLiveQueryEvent]
@@ -86,7 +86,7 @@ This repo also includes an example that shows you a simple usage of using `RxSwi
 
 ## Upcoming releases will include
 
-* `.rx` extension on `insert`, `update`, `remove` and `evict`
+- `.rx` extension on `insert`, `update`, `remove` and `evict`
 
 ## Author
 

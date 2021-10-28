@@ -4,6 +4,13 @@ import RxSwiftDitto
 import DittoSwift
 import Fakery
 
+fileprivate struct Car: Codable {
+    var _id: String
+    var name: String
+    var mileage: Double
+    var tags: [Int]
+}
+
 class Tests: XCTestCase {
 
     var ditto: Ditto!
@@ -25,7 +32,7 @@ class Tests: XCTestCase {
         super.tearDown()
     }
 
-    func testInsertions() {
+    func testLiveQueryForPendingCursor() {
         let expectation = XCTestExpectation(description: "Observes number of documents in live query")
         let collectionName: String = UUID().uuidString
         let collection: DittoCollection = ditto.store[collectionName]
@@ -46,7 +53,7 @@ class Tests: XCTestCase {
             .findAll()
             .rx
             .liveQuery
-            .subscribe(onNext: { docs in
+            .subscribe(onNext: { (docs, _) in
                 XCTAssertEqual(docs.count, 10)
                 expectation.fulfill()
             })
@@ -56,22 +63,34 @@ class Tests: XCTestCase {
         disposeBag = DisposeBag()
     }
 
-    func testInsertionTransactions() {
-        for _ in 0..<100 {
-            ditto.store.write { trx in
-                try! trx["cars"].insert([
-                    "name": ["Honda", "Toyota", "Ford"].randomElement()!,
-                    "color": ["red", "blue", "green"].randomElement()!,
-                ])
-            }
-        }
-        // This is an example of a functional test case.
-        let numberOfDocs = ditto.store["cars"].findAll().exec()
-        XCTAssertEqual(numberOfDocs.count, 100)
-    }
-    
-    func testLiveQuery() {
+    func testLiveQueryForPendingIDSpecificCursor() {
+        let expectation = XCTestExpectation(description: "Observes number of documents in live query")
+        let collectionName: String = UUID().uuidString
+        let collection: DittoCollection = ditto.store[collectionName]
 
+        let insertedId = try! collection.insert([
+            "name": "Honda",
+            "mileage": 1234
+        ])
+
+        collection
+            .findByID(insertedId)
+            .rx
+            .liveQuery
+            .subscribe(onNext: { (doc, _) in
+                guard let doc = doc else {
+                    expectation.isInverted = true
+                    expectation.fulfill()
+                    return
+                }
+                XCTAssert(doc["name"].stringValue == "Honda")
+                XCTAssert(doc["mileage"].intValue == 1234)
+                expectation.fulfill()
+            })
+            .disposed(by: disposeBag)
+
+        wait(for: [expectation], timeout: 10.0)
+        disposeBag = DisposeBag()
     }
     
 }

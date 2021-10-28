@@ -102,7 +102,7 @@ class RxDataSourcesDocumentsViewController: UIViewController {
             .sort("editedOn", direction: .descending)
             .rx
             .liveQuery
-            .map({ docs -> [SectionOfCompanies] in
+            .map({ (docs, _) -> [SectionOfCompanies] in
                 let companies: [Company] = docs.map({ doc in Company(document: doc) })
                 return [SectionOfCompanies(items: companies)]
             })

@@ -9,12 +9,18 @@ extension DittoPendingCursorOperation: ReactiveCompatible { }
 extension Reactive where Base: DittoPendingCursorOperation {
 
     /**
-     Returns an observable of `[DittoDocument]` which will fire for each snapshot change of the query
+     * Attempt to transform the live query documents into a Codable type.
+     * This observable can fail in the event decoding fails.
      */
-    public var liveQuery: Observable<[DittoDocument]> {
+    public func liveQuery<T: Codable>(typed: T.Type) -> Observable<[T]> {
         return Observable.create { observer in
             let liveQuery = self.base.observe(eventHandler: { docs, _ in
-                observer.onNext(docs)
+                do {
+                    let items = try docs.map({ try $0.typed(as: typed).value })
+                    observer.onNext(items)
+                } catch (let err) {
+                    observer.onError(err)
+                }
             })
             return Disposables.create {
                 liveQuery.stop()
@@ -22,12 +28,11 @@ extension Reactive where Base: DittoPendingCursorOperation {
         }
     }
 
-
     /**
      Returns an observable of ([DittoDocument], DittoLiveQueryEvent?)
      This is useful for discerning what has happened since the last sync value.
      */
-    public var liveQueryDocumentsWithEvent: Observable<DittoDocumentsWithLiveQueryEvent> {
+    public var liveQuery: Observable<DittoDocumentsWithLiveQueryEvent> {
         return Observable.create { observer in
             let liveQuery = base.observe(eventHandler: { docs, event in
                 observer.onNext((docs, event))

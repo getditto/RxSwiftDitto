@@ -13,11 +13,20 @@ public typealias DittoDocumentWithLiveQueryEvent = (DittoDocument?, DittoSingleD
 extension DittoPendingIDSpecificOperation: ReactiveCompatible { }
 
 extension Reactive where Base: DittoPendingIDSpecificOperation {
-
-    public var liveQuery: Observable<DittoDocument?> {
+    /**
+     * Returns an observable typed as a Codable. If the document isn't available, it emit `nil`.
+     * If the decoding fails for some reason, the observable will stop and emit an error
+     */
+    public func liveQuery<T: Codable>(typed: T.Type) -> Observable<T?> {
         return Observable.create { observer in
             let l = self.base.observe { doc, _ in
-                observer.onNext(doc)
+                guard let doc = doc else { return }
+                do {
+                    let decoded = try doc.typed(as: typed).value
+                    observer.onNext(decoded)
+                } catch(let err) {
+                    observer.onError(err)
+                }
             }
             return Disposables.create {
                 l.stop()
@@ -25,7 +34,10 @@ extension Reactive where Base: DittoPendingIDSpecificOperation {
         }
     }
 
-    public var liveQueryDocumentWithEvent: Observable<DittoDocumentWithLiveQueryEvent> {
+    /**
+     * Returns an observable of the live query
+     */
+    public var liveQuery: Observable<DittoDocumentWithLiveQueryEvent> {
         return Observable.create { observer in
             let l = self.base.observe { doc, event in
                 observer.onNext((doc, event))
