@@ -63,7 +63,7 @@ class RxDataSourcesDocumentsViewController: UIViewController {
             .rx
             .tap
             .bind { _ in
-                try! AppDelegate.ditto.store["companies"].insert([
+                try! AppDelegate.ditto.store["companies"].upsert([
                     "title": Faker().company.name(),
                     "details": Faker().company.bs(),
                     "editedOn": ISO8601DateFormatter().string(from: Date())

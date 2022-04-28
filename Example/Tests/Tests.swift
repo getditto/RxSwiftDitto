@@ -18,17 +18,16 @@ class Tests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-
-        let randomTemporaryDirectory = URL(fileURLWithPath: NSTemporaryDirectory(),
-                                        isDirectory: true).appendingPathComponent(UUID().uuidString)
+        let randomTemporaryDirectory = URL(
+            fileURLWithPath: NSTemporaryDirectory(),
+            isDirectory: true
+        ).appendingPathComponent(UUID().uuidString)
         ditto = Ditto(persistenceDirectory: randomTemporaryDirectory)
-        ditto.setAccessLicense(Helper.licenseToken)
-        ditto.startSync()
+        try! ditto.setOfflineOnlyLicenseToken(Helper.licenseToken)
+        try! ditto.tryStartSync()
     }
-    
+
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
 
@@ -45,7 +44,7 @@ class Tests: XCTestCase {
                 ]
             }
             .subscribe(onNext: { paylod in
-                try! collection.insert(paylod)
+                try! collection.upsert(paylod)
             })
             .disposed(by: disposeBag)
 
@@ -68,7 +67,7 @@ class Tests: XCTestCase {
         let collectionName: String = UUID().uuidString
         let collection: DittoCollection = ditto.store[collectionName]
 
-        let insertedId = try! collection.insert([
+        let insertedId = try! collection.upsert([
             "name": "Honda",
             "mileage": 1234
         ])
@@ -92,5 +91,36 @@ class Tests: XCTestCase {
         wait(for: [expectation], timeout: 10.0)
         disposeBag = DisposeBag()
     }
-    
+
+    func testLiveQueryForPendingIDSpecificCursorUsingCustomQueue() {
+        let expectation = XCTestExpectation(description: "Observes number of documents in live query")
+        let collectionName: String = UUID().uuidString
+        let collection: DittoCollection = ditto.store[collectionName]
+
+        let insertedId = try! collection.upsert([
+            "name": "Honda",
+            "mileage": 1234
+        ])
+
+        let queue = DispatchQueue(label: "live.ditto.rxswiftditto.custom_queue_test")
+
+        collection
+            .findByID(insertedId)
+            .rx
+            .liveQuery(deliverOn: queue)
+            .subscribe(onNext: { (doc, _) in
+                guard let doc = doc else {
+                    expectation.isInverted = true
+                    expectation.fulfill()
+                    return
+                }
+                XCTAssert(doc["name"].stringValue == "Honda")
+                XCTAssert(doc["mileage"].intValue == 1234)
+                expectation.fulfill()
+            })
+            .disposed(by: disposeBag)
+
+        wait(for: [expectation], timeout: 10.0)
+        disposeBag = DisposeBag()
+    }
 }

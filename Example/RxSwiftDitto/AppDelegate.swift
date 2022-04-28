@@ -27,8 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // ditto setup
         Self.ditto = Ditto()
-        Self.ditto.setAccessLicense(Helper.licenseToken)
-        Self.ditto.startSync()
+        try! Self.ditto.setOfflineOnlyLicenseToken(Helper.licenseToken)
+        try! Self.ditto.tryStartSync()
 
         self.window = window
         return true

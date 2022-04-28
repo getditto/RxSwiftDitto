@@ -11,9 +11,9 @@ import Foundation
 struct Helper {
 
     static var licenseToken: String {
-        let path = Bundle.main.path(forResource: "license_token", ofType: "txt") // file path for file "data.txt"
+        let path = Bundle.main.path(forResource: "license_token", ofType: "txt")
         guard let text = try? String(contentsOfFile: path!) else {
-            fatalError("please add a file called license_token.txt to the bundle and paste a valid Ditto license token")
+            fatalError("please add a file called license_token.txt to the bundle containing a valid Ditto license token")
         }
         return text
     }

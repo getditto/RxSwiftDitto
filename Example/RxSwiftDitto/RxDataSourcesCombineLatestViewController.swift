@@ -77,13 +77,13 @@ class RxDataSourcesCombineLatestViewController: UIViewController {
                 if let randomCompany = companyDocs.map({ Company(document: $0) }).randomElement() {
                     companyId = randomCompany.id
                 } else {
-                    companyId = try! AppDelegate.ditto.store["companies"].insert([
+                    companyId = try! AppDelegate.ditto.store["companies"].upsert([
                         "title": faker.company.name(),
                         "details": faker.company.bs(),
                         "editedOn": ISO8601DateFormatter().string(from: Date()),
                     ]).toString()
                 }
-                try! AppDelegate.ditto.store["products"].insert([
+                try! AppDelegate.ditto.store["products"].upsert([
                     "title": faker.commerce.productName(),
                     "details": faker.lorem.paragraphs(amount:1),
                     "editedOn": ISO8601DateFormatter().string(from: Date()),

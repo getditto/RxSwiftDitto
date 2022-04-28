@@ -16,10 +16,6 @@ it, simply add the following line to your Podfile:
 pod 'RxSwiftDitto'
 ```
 
-### For testing...
-
-DittoSwift requires a license token in order to work properly. Please contact the Ditto team on at [contact@ditto.live](mailto:contact@ditto.live) to get access to a license token. This project loads a license token from a file `license_token.txt`. Once you've obtained a license token, you can create the file and paste it in. Once you open up `RxSwiftDitto.xcworkspace` you will see that the `license_token.txt` is part of the test target. Note: `license_token.txt` is part of the `.gitignore`. Ensure not to accidentally commit and push it up to this repo.
-
 ## Usage:
 
 Simple live queries with snapshots of `[DittoDocument]`
