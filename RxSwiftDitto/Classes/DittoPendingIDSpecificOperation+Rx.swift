@@ -47,4 +47,18 @@ extension Reactive where Base: DittoPendingIDSpecificOperation {
             }
         }
     }
+
+    /**
+     * Returns an observable of the live query
+     */
+    public func liveQuery(deliverOn queue: DispatchQueue = .main) -> Observable<DittoDocumentWithLiveQueryEvent> {
+        return Observable.create { observer in
+            let l = self.base.observe(deliverOn: queue) { doc, event in
+                observer.onNext((doc, event))
+            }
+            return Disposables.create {
+                l.stop()
+            }
+        }
+    }
 }

@@ -12,7 +12,7 @@ extension Reactive where Base: DittoPendingCursorOperation {
      * Attempt to transform the live query documents into a Codable type.
      * This observable can fail in the event decoding fails.
      */
-    public func liveQuery<T: Codable>(typed: T.Type) -> Observable<[T]> {
+    public func liveQuery<T: Codable>(typed: T.Type, deliverOn queue: DispatchQueue = .main) -> Observable<[T]> {
         return Observable.create { observer in
             let liveQuery = self.base.observe(eventHandler: { docs, _ in
                 do {
@@ -37,6 +37,21 @@ extension Reactive where Base: DittoPendingCursorOperation {
             let liveQuery = base.observe(eventHandler: { docs, event in
                 observer.onNext((docs, event))
             })
+            return Disposables.create {
+                liveQuery.stop()
+            }
+        }
+    }
+
+    /**
+     Returns an observable of ([DittoDocument], DittoLiveQueryEvent?)
+     This is useful for discerning what has happened since the last sync value.
+     */
+    public func liveQuery(deliverOn queue: DispatchQueue = .main) -> Observable<DittoDocumentsWithLiveQueryEvent> {
+        return Observable.create { observer in
+            let liveQuery = base.observe(deliverOn: queue) { docs, event in
+                observer.onNext((docs, event))
+            }
             return Disposables.create {
                 liveQuery.stop()
             }
