@@ -12,6 +12,8 @@ Pod::Spec.new do |s|
 
   s.source_files = 'RxSwiftDitto/Classes/**/*'
 
+  s.swift_versions = ['5.2', '5.3', '5.4', '5.5']
+
   s.dependency 'RxSwift', '~> 6.0'
   s.dependency 'DittoSwift', '~> 1.0'
 end
